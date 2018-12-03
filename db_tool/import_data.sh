@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+python import_category_data.py
+python import_goods_data.py
+python import_goods_image.py
+python import_banner_data.py
+python import_topic_data.py
+python import_msg_data.py
+python create_admin.py
+python create_user.py
