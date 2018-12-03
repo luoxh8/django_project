@@ -1,1 +1,1 @@
-supervisorctl stop jinpai
+supervisorctl stop django_project

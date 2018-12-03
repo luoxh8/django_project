@@ -3,11 +3,11 @@ server {
     listen 6001;
 
     location /static {
-        alias /opt/jinpai/nginx/static/;
+        alias /opt/django_project/nginx/static/;
     }
 
     location /media {
-        alias /opt/jinpai/nginx/media/;
+        alias /opt/django_project/nginx/media/;
     }
 
     location / {

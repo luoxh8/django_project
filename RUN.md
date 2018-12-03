@@ -1,2 +1,2 @@
-> ln -s /root/jinpai/jinpai.conf /etc/supervisor/conf.d/jinpai.conf
+> ln -s /root/django_project/django_project.conf /etc/supervisor/conf.d/django_project.conf
 

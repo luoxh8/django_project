@@ -1,1 +1,1 @@
-supervisorctl restart jinpai
+supervisorctl restart django_project
