@@ -42,7 +42,7 @@ class Profile(AbstractUser):
 
     # 第三方登录字段
     is_third = models.BooleanField(
-        default=False, null=True, blank=True, verbose_name='是否都第三方登录')
+        default=False, verbose_name='是否都第三方登录')
     oauth_openid = models.CharField(
         max_length=128, default='', verbose_name='第三方openid')
     oauth_avatar = models.CharField(
