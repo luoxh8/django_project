@@ -21,7 +21,7 @@ ubuntu下，请使用```ln -s /root/django_project/django_project.conf /ect/supe
 
 
 
-**注意**，其中**/root/django_project/django_project.conf**替换成自己的配置文件的位置。
+**注意**，其中/root/django_project/django_project.conf替换成自己的配置文件的位置。
 
 
 
