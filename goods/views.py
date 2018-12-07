@@ -61,7 +61,6 @@ class GoodsListAPIView(APIView):
         if not goods_list:
             return err_goods_not_found()
 
-
         return_data = array_success()
         return_data['data'] = serializer_list_data(goods_list, GoodsDetailSerializer, request)
         return success_request(return_data)

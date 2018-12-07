@@ -5,7 +5,7 @@ from h_utils.response_extra import err_base_illegal_permission, err_base_not_dat
 from h_utils.success import array_success, dict_success
 from msg.models import Msg, MsgHandler
 from msg.permissions import IsMsgReceiver
-from msg.serializers import MsgSerializer, MsgListSerializer
+from msg.serializers import MsgListSerializer, MsgSerializer
 
 
 class MsgAPIView(APIView):

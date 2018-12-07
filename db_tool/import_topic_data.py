@@ -14,9 +14,9 @@ from homes.models import Topic
 
 for topic in topic_data:
     Topic.objects.create(
-            title=topic['title'],
-            icon=topic['icon'],
-            index=topic['index'],
-            url=topic['url']
+        title=topic['title'],
+        icon=topic['icon'],
+        index=topic['index'],
+        url=topic['url']
     )
 print('topic数据导入完成')

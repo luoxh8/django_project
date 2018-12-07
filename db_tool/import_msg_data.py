@@ -14,10 +14,10 @@ from msg.models import Msg
 
 for msg in msg_data:
     Msg.objects.create(
-            title=msg['title'],
-            content=msg['content'],
-            periods=msg['periods'],
-            msg_type=msg['msg_type'],
+        title=msg['title'],
+        content=msg['content'],
+        periods=msg['periods'],
+        msg_type=msg['msg_type'],
     )
 
 print('msg数据导入完成')

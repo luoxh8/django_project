@@ -1,7 +1,6 @@
 from django.db import models
 
 from core.models import CoreModel
-from goods.models import Category, Goods
 
 
 class Banner(CoreModel):

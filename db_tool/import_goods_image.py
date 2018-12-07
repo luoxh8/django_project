@@ -18,9 +18,9 @@ goods_list = Goods.objects.all()
 for goods in goods_list:
     for i in count:
         GoodsImage.objects.create(
-                index=goods_image_data['index'],
-                image=goods_image_data['image'],
-                goods=goods,
+            index=goods_image_data['index'],
+            image=goods_image_data['image'],
+            goods=goods,
         )
 
 print('goods_image导入成功')

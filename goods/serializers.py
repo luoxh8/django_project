@@ -52,4 +52,3 @@ class GoodsDetailSerializer(serializers.ModelSerializer):
             'goods_sn',
         )
         depth = 1
-

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -26,7 +25,7 @@ class Migration(migrations.Migration):
                 ('activity', models.CharField(blank=True, max_length=30, null=True, verbose_name='跳转控制器')),
             ],
             options={
-                'verbose_name': '首页Banner',
+                'verbose_name'       : '首页Banner',
                 'verbose_name_plural': '首页Banner',
             },
         ),
@@ -45,7 +44,7 @@ class Migration(migrations.Migration):
                 ('activity', models.CharField(blank=True, max_length=30, null=True, verbose_name='跳转控制器')),
             ],
             options={
-                'verbose_name': '首页Topic',
+                'verbose_name'       : '首页Topic',
                 'verbose_name_plural': '首页Topic',
             },
         ),

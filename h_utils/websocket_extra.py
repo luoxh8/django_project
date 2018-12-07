@@ -16,8 +16,8 @@ class WebsocketConsumerExtra(WebsocketConsumer):
     def connect(self):
         scheduler.add_job(self.close, self.heartbeat_time_out, self.channel_name)
         async_to_sync(self.channel_layer.group_add)(
-                self.room_name,
-                self.channel_name
+            self.room_name,
+            self.channel_name
         )
         self.accept()
 
@@ -41,8 +41,8 @@ class WebsocketConsumerExtra(WebsocketConsumer):
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
-                self.room_name,
-                self.channel_name
+            self.room_name,
+            self.channel_name
         )
         scheduler.remove_job(self.channel_name)
 
@@ -55,8 +55,8 @@ class AsyncWebsocketConsumerExtra(AsyncWebsocketConsumer):
     async def connect(self):
         scheduler.add_job(self.close, 5, self.channel_name)
         await self.channel_layer.group_add(
-                self.room_name,
-                self.channel_name
+            self.room_name,
+            self.channel_name
         )
         await self.accept()
 
@@ -78,7 +78,7 @@ class AsyncWebsocketConsumerExtra(AsyncWebsocketConsumer):
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
-                self.room_name,
-                self.channel_name
+            self.room_name,
+            self.channel_name
         )
         scheduler.remove_job(self.channel_name)
