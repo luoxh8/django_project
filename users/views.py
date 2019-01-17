@@ -7,16 +7,11 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
 
+from h_utils.errors import ErrBaseParams, ErrUserDoesExist, ErrUserDoesNotExist, ErrUserPasswordIncorrect, \
+    ErrUserNotSupportedForLogin, ErrUserNotAccessTheValidate, ErrUserSamePassword, \
+    ErrVerificationCodeForResettingThePasswordIsIncorrect
 from h_utils.generator import gen_ip, gen_random_string, gen_uid
-from h_utils.response_extra import (err_base_params,
-                                    err_user_does_exist,
-                                    err_user_does_not_exist,
-                                    err_user_not_access_the_validate,
-                                    err_user_not_supported_for_login,
-                                    err_user_password_incorrect,
-                                    err_user_reset_password,
-                                    err_user_same_password,
-                                    success_request)
+from h_utils.response_extra import error_request, success_request
 from h_utils.serializers_extra import serializer_data
 from h_utils.success import dict_success, normal_success
 from h_utils.validator import is_code, is_password, is_phone
@@ -38,21 +33,21 @@ class PhoneRegister(APIView):
             password = request.data['password']
             code = request.data['code']
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if not is_phone(phone):
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if not is_password(password):
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if not is_code(code):
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         exists = Profile.objects.filter(phone=phone).exists()
 
         if exists:
-            return err_user_does_exist()
+            return error_request(ErrUserDoesExist)
 
         user = Profile.objects.create(uid=gen_uid(),
                                       phone=phone,
@@ -81,21 +76,21 @@ class PhoneLogin(APIView):
             phone = request.data['phone']
             password = request.data['password']
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if not is_phone(phone):
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if not is_password(password):
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         user = Profile.objects.filter(phone=phone).first()
 
         if not user:
-            return err_user_does_not_exist()
+            return error_request(ErrUserDoesNotExist)
 
         if not check_password(password, user.password):
-            return err_user_password_incorrect()
+            return error_request(ErrUserPasswordIncorrect)
 
         return_data = dict_success()
         return_data['msg'] = '登录成功'
@@ -110,29 +105,29 @@ class ThirdLoginAPIView(APIView):
 
     def check_in_login_zone(self, oauth_from):
         if oauth_from not in self.login_zone:
-            return False, err_user_not_supported_for_login()
+            return False, error_request(ErrUserNotSupportedForLogin)
 
     def validate_and_get_userinfo(self, oauth_from, access_token, oauth_openid):
         if oauth_from == self.login_zone[0]:
             ret = requests.get('https://api.weibo.com/2/users/show.json',
                                params={'access_token': access_token,
-                                       'uid'         : int(oauth_openid)})
+                                       'uid': int(oauth_openid)})
             ret = ret.json()
             self.username = '微博用户' + oauth_openid + gen_random_string()
             return ret.get('error_code', 0) == 0, ret
         elif oauth_from == self.login_zone[1]:
             ret = requests.get('https://graph.qq.com/user/get_user_info',
-                               params={'access_token'      : access_token,
-                                       'openid'            : oauth_openid,
+                               params={'access_token': access_token,
+                                       'openid': oauth_openid,
                                        'oauth_consumer_key': '1106741162',
-                                       'format'            : 'json'})
+                                       'format': 'json'})
             ret = ret.json()
             self.username = 'qq用户' + oauth_openid + gen_random_string()
             return ret['ret'] == 0, ret
         elif oauth_from == self.login_zone[2]:
             ret = requests.get('https://api.weixin.qq.com/sns/userinfo',
                                params={'access_token': access_token,
-                                       'openid'      : oauth_openid})
+                                       'openid': oauth_openid})
             ret = ret.json()
             self.username = '微信用户' + oauth_openid + gen_random_string()
             return ret.get('errcode', 0) == 0, ret
@@ -166,9 +161,9 @@ class ThirdLoginAPIView(APIView):
             gender = int(gender)
 
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
         except ValueError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         is_in_login_zone, return_data = self.check_in_login_zone(oauth_from)
         if not is_in_login_zone:
@@ -177,7 +172,7 @@ class ThirdLoginAPIView(APIView):
         is_valid, oauth_userinfo = self.validate_and_get_userinfo(oauth_from, access_token, oauth_openid)
 
         if not is_valid:
-            return err_user_not_access_the_validate()
+            return error_request(ErrUserNotAccessTheValidate)
 
         user = Profile.objects.filter(oauth_openid=oauth_openid).first()
         if user:
@@ -217,7 +212,7 @@ class InfoAPIView(APIView):
         user = Profile.objects.filter(username=request.user).first()
 
         if not user:
-            return err_user_does_not_exist()
+            return error_request(ErrUserDoesNotExist)
 
         return_data = dict_success()
         return_data['data'] = serializer_data(user, ProfileSerializer, request)
@@ -233,18 +228,18 @@ class ChangePasswordAPIView(APIView):
             old_password = request.data['old_password']
             new_password = request.data['new_password']
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if not is_password(new_password):
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if old_password == new_password:
-            return err_user_same_password()
+            return error_request(ErrUserSamePassword)
 
         user = Profile.objects.filter(username=request.user).first()
 
         if not check_password(old_password, user.password):
-            return err_user_password_incorrect()
+            return error_request(ErrUserPasswordIncorrect)
 
         user.password = make_password(new_password)
         user.save()
@@ -263,10 +258,10 @@ class ResetPasswordAPIView(APIView):
             password = request.data['password']
             code = request.data['code']
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         if not is_code(code):
-            return err_user_reset_password()
+            return error_request(ErrVerificationCodeForResettingThePasswordIsIncorrect)
 
         user = Profile.objects.filter(phone=phone).first()
         user.password = make_password(password)

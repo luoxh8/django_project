@@ -3,13 +3,8 @@ from rest_framework.views import APIView
 
 from goods.models import Goods, GoodsImage
 from goods.serializers import GoodsCategorySerializer, GoodsDetailSerializer, GoodsImageSerializer
-from h_utils.response_extra import (err_base_not_data,
-                                    err_base_params,
-                                    err_base_server,
-                                    err_goods_bid,
-                                    err_goods_bidding,
-                                    err_goods_not_found,
-                                    success_request)
+from h_utils.errors import ErrBaseParams, ErrBaseNotData, ErrGoodsNotFound, ErrGoodsBidding, ErrBaseServer, ErrGoodsBid
+from h_utils.response_extra import success_request, error_request
 from h_utils.serializers_extra import serializer_data, serializer_list_data
 from h_utils.success import array_success, dict_success, normal_success
 from users.models import Balance
@@ -22,10 +17,11 @@ class GoodsCategoryDetailAPIView(APIView):
         try:
             category_id = request.query_params['category_id']
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
+
         goods_list = Goods.objects.filter(category_id=int(category_id))
         if not goods_list:
-            return err_base_not_data()
+            return error_request(ErrBaseNotData)
 
         return_data = array_success()
         return_data['data'] = serializer_list_data(goods_list, GoodsCategorySerializer, request)
@@ -39,12 +35,13 @@ class GoodsDetailAPIView(APIView):
         try:
             goods_id = request.query_params['goods_id']
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         goods = Goods.objects.filter(goods_id=goods_id).first()
 
         if not goods:
-            return err_base_not_data()
+            return error_request(ErrBaseNotData)
+
         goods_image_list = GoodsImage.objects.filter(goods_id=goods.id).all()
         return_data = dict_success()
         return_data['data'] = serializer_data(goods, GoodsDetailSerializer, request)
@@ -59,7 +56,7 @@ class GoodsListAPIView(APIView):
         goods_list = Goods.objects.all()
 
         if not goods_list:
-            return err_goods_not_found()
+            return error_request(ErrGoodsNotFound)
 
         return_data = array_success()
         return_data['data'] = serializer_list_data(goods_list, GoodsDetailSerializer, request)
@@ -87,7 +84,7 @@ class BidAPIView(APIView):
     def check_bid(self, request):
         # 检查是否在支付数组里面
         if request.user in bid_array:
-            return err_goods_bidding()
+            return error_request(ErrGoodsBidding)
 
         # 添加对象到支付数组
         bid_array.append(request.user)
@@ -100,7 +97,7 @@ class BidAPIView(APIView):
         try:
             goods_id = request.data['goods_id']
         except KeyError:
-            return err_base_params()
+            return error_request(ErrBaseParams)
 
         self.check_bid(request)
 
@@ -109,11 +106,11 @@ class BidAPIView(APIView):
 
         if not balance or not goods:
             self.remove_bid(request)
-            return err_base_server()
+            return error_request(ErrBaseServer)
 
         if not self.can_bid(goods, balance):
             self.remove_bid(request)
-            return err_goods_bid()
+            return error_request(ErrGoodsBid)
 
         balance.balance -= goods.step_price
         goods.now_price += 0.1

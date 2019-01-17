@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                                                             to='auth.Permission', verbose_name='user permissions')),
             ],
             options={
-                'verbose_name'       : '用户',
+                'verbose_name': '用户',
                 'verbose_name_plural': '用户',
             },
             managers=[
@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
                                               verbose_name='用户')),
             ],
             options={
-                'verbose_name'       : '用户余额',
+                'verbose_name': '用户余额',
                 'verbose_name_plural': '用户余额',
             },
         ),
@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
                                               verbose_name='用于余额')),
             ],
             options={
-                'verbose_name'       : '用户支付操作',
+                'verbose_name': '用户支付操作',
                 'verbose_name_plural': '用户支付操作',
             },
         ),

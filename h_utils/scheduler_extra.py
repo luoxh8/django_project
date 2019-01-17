@@ -1,18 +1,18 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 
 APS_SCHEDULER_CONFIG = {
-    'jobstores'   : {
+    'jobstores': {
         'default': {'type': 'sqlalchemy', 'url': 'sqlite:///job.sqlite3'},
     },
-    'executors'   : {
+    'executors': {
         'default': {'type': 'processpool', 'max_workers': 10}
     },
     'job_defaults': {
-        'coalesce'          : True,
-        'max_instances'     : 5,
+        'coalesce': True,
+        'max_instances': 5,
         'misfire_grace_time': 30
     },
-    'timezone'    : 'Asia/Shanghai'
+    'timezone': 'Asia/Shanghai'
 }
 
 

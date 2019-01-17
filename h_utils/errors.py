@@ -53,7 +53,7 @@ ErrUserDoesNotExist = {'code': 601, 'msg': "用户不存在"}
 ErrUserDoesExist = {'code': 602, 'msg': "用户存在"}
 ErrUserPasswordIncorrect = {'code': 603, 'msg': "密码错误"}
 ErrUserSamePassword = {'code': 604, 'msg': "新旧密码相同"}
-ErrUserResetPassword = {'code': 605, 'msg': "重置密码的验证码错误"}
+ErrVerificationCodeForResettingThePasswordIsIncorrect = {'code': 605, 'msg': "重置密码的验证码错误"}
 ErrUserNotSupportedForLogin = {'code': 606, 'msg': "暂不支持此方式登录"}
 ErrUserNotAccessTheValidate = {'code': 607, 'msg': "信息没有通过验证"}
 

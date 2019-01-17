@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('action', models.IntegerField(choices=[(1, '注册'), (2, '重置密码'), (3, '提现')], verbose_name='动作')),
             ],
             options={
-                'verbose_name'       : '验证码',
+                'verbose_name': '验证码',
                 'verbose_name_plural': '验证码',
             },
         ),
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                  models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='goods.Goods', verbose_name='商品')),
             ],
             options={
-                'verbose_name'       : '收藏',
+                'verbose_name': '收藏',
                 'verbose_name_plural': '收藏',
             },
         ),

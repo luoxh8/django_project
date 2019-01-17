@@ -15,7 +15,7 @@ from h_utils.generator import gen_uid
 
 user = Profile.objects.create(uid=gen_uid(),
                               username='admin',
-                              password=make_password('huihui123'),
+                              password=make_password('a12345678'),
                               is_superuser=True,
                               is_staff=True)
 

@@ -14,7 +14,7 @@ class IMConsumer(WebsocketConsumerExtra):
         data = self.parse_data(text_data)
         if data['route'] == 'heartbeat':
             async_to_sync(self.channel_layer.group_send)(self.room_name, {
-                'type'   : data['route'],
+                'type': data['route'],
                 'message': text_data,
             })
         else:

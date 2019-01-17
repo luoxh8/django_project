@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('periods', models.IntegerField(verbose_name='公告期数')),
             ],
             options={
-                'verbose_name'       : '消息',
+                'verbose_name': '消息',
                 'verbose_name_plural': '消息',
             },
         ),
@@ -37,10 +37,11 @@ class Migration(migrations.Migration):
                 ('updated_time', models.DateTimeField(auto_now=True, verbose_name='修改时间')),
                 ('is_delete', models.BooleanField(default=False, verbose_name='是否被删除')),
                 (
-                'msg', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='msg.Msg', verbose_name='消息')),
+                    'msg',
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='msg.Msg', verbose_name='消息')),
             ],
             options={
-                'verbose_name'       : '消息处理',
+                'verbose_name': '消息处理',
                 'verbose_name_plural': '消息处理',
             },
         ),

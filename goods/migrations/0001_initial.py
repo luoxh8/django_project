@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('is_out', models.BooleanField(default=True, verbose_name='是否出局')),
             ],
             options={
-                'verbose_name'       : '出价记录',
+                'verbose_name': '出价记录',
                 'verbose_name_plural': '出价记录',
             },
         ),
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('index', models.IntegerField(verbose_name='排序')),
             ],
             options={
-                'verbose_name'       : '类型',
+                'verbose_name': '类型',
                 'verbose_name_plural': '类型',
             },
         ),
@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                                                verbose_name='商品类目')),
             ],
             options={
-                'verbose_name'       : '商品',
+                'verbose_name': '商品',
                 'verbose_name_plural': '商品',
             },
         ),
@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
                                             verbose_name='商品')),
             ],
             options={
-                'verbose_name'       : '商品图片',
+                'verbose_name': '商品图片',
                 'verbose_name_plural': '商品图片',
             },
         ),
@@ -104,7 +104,7 @@ class Migration(migrations.Migration):
                  models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='goods.Goods', verbose_name='商品')),
             ],
             options={
-                'verbose_name'       : '房间详情',
+                'verbose_name': '房间详情',
                 'verbose_name_plural': '房间详情',
             },
         ),
