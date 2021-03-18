@@ -17,7 +17,7 @@ hyperlink==18.0.0
 idna==2.7
 incremental==17.5.0
 Markdown==3.0.1
-Pillow==6.2.0
+Pillow==8.1.1
 PyHamcrest==1.9.0
 PyJWT==1.7.0
 pytz==2018.7
