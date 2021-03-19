@@ -11,7 +11,7 @@ constantly==15.1.0
 daphne==2.2.3
 Django==2.2.13
 django-markdownx==2.0.28
-djangorestframework==3.9.0
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 hyperlink==18.0.0
 idna==2.7
